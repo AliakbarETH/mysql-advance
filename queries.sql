@@ -8,3 +8,18 @@ CALL GetAverageSalary(@Low, @High) ;
 
 SELECT @Low, @High;
 
+DELIMITER //
+
+CREATE TRIGGER OrderQuantityCheck BEFORE INSERT ON Orders FOR EACH ROW BEGIN IF NEW.Quantity <0 THEN SET NEW.Quantity = 0 ; END IF; END //
+
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS Lucky_Shrub.OrderQuantityCheck ;
+
+
+CREATE EVENT DailyRestock ON SCHEDULE EVERY 1 DAY DO BEGIN IF Products.NoOfItems < 50 THEN Products SET NoOfItems= 50; END IF ;  END //
+
+
+CREATE EVENT GenerateRevenueReport ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 12 HOUR DO BEGIN INSERT INTO ReportData(OrderID, ClientID, ProductID, Quantity,Cost, Date ) SELECT * FROM Orders WHERE Date BETWEEN '2022-08-01' AND '2022-08-31'; END //
+
+

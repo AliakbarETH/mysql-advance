@@ -8,3 +8,12 @@ CALL GetAverageSalary(@Low, @High) ;
 
 SELECT @Low, @High;
 
+DELIMITER //
+
+CREATE TRIGGER OrderQuantityCheck BEFORE INSERT ON Orders FOR EACH ROW BEGIN IF NEW.Quantity <0 THEN SET NEW.Quantity = 0 ; END IF; END //
+
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS Lucky_Shrub.OrderQuantityCheck ;
+
+

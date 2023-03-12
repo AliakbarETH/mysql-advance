@@ -23,3 +23,14 @@ CREATE EVENT DailyRestock ON SCHEDULE EVERY 1 DAY DO BEGIN IF Products.NoOfItems
 CREATE EVENT GenerateRevenueReport ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 12 HOUR DO BEGIN INSERT INTO ReportData(OrderID, ClientID, ProductID, Quantity,Cost, Date ) SELECT * FROM Orders WHERE Date BETWEEN '2022-08-01' AND '2022-08-31'; END //
 
 
+START TRANSACTION 
+
+SQL_Statement_1
+
+SQL_Statement_2
+
+SQL_Statement_3
+
+ROLLBACK/ COMMIT
+
+Common Table Expression - CTE
